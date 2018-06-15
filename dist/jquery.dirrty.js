@@ -6,7 +6,7 @@
  */
 
 // Save dirrty instances
-var singleDs = {};
+var dirrtySingleDs = {};
 
 (function($) {
   function Dirrty(form, options) {
@@ -15,7 +15,7 @@ var singleDs = {};
     this.options = options;
     this.history = ["clean", "clean"]; //Keep track of last statuses
     this.id = $(form).attr("id");
-    singleDs[this.id] = this;
+    dirrtySingleDs[this.id] = this;
   }
 
   Dirrty.prototype = {
@@ -147,7 +147,7 @@ var singleDs = {};
   $.fn.dirrty = function(options) {
     if (/^(isDirty)$/i.test(options) || /^(setClean)$/i.test(options)) {
       //Check if we have an instance of dirrty for this form
-      var d = singleDs[$(this).attr("id")];
+      var d = dirrtySingleDs[$(this).attr("id")];
 
       if (!d) {
         var d = new Dirrty($(this), options);
