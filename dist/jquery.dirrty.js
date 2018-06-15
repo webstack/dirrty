@@ -5,27 +5,17 @@
  * Released under the MIT license
  */
 
-//Save dirrty instances
-var singleDs = [];
+// Save dirrty instances
+var singleDs = {};
 
 (function($) {
-  function getSingleton(id) {
-    var result;
-    $(singleDs).each(function() {
-      if ($(this)[0].id == id) {
-        result = $(this)[0];
-      }
-    });
-    return result;
-  }
-
   function Dirrty(form, options) {
     this.form = form;
     this.isDirty = false;
     this.options = options;
     this.history = ["clean", "clean"]; //Keep track of last statuses
     this.id = $(form).attr("id");
-    singleDs.push(this);
+    singleDs[this.id] = this;
   }
 
   Dirrty.prototype = {
@@ -157,7 +147,7 @@ var singleDs = [];
   $.fn.dirrty = function(options) {
     if (/^(isDirty)$/i.test(options) || /^(setClean)$/i.test(options)) {
       //Check if we have an instance of dirrty for this form
-      var d = getSingleton($(this).attr("id"));
+      var d = singleDs[$(this).attr("id")];
 
       if (!d) {
         var d = new Dirrty($(this), options);
